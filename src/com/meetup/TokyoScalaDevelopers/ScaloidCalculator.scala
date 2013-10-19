@@ -14,9 +14,13 @@ class Calculator extends SActivity {
               .<<.Weight(1).>>
               .onClick(toast(s"Clicked $num"))
           }
-        }
+        }.<<.Weight(3).>>
       }
 
+      this += new SLinearLayout {
+        SButton("0").<<.Weight(2).>>
+        SButton(".").<<.Weight(1).>>
+      }.<<.Weight(3).>>
     }
   }
 }
