@@ -1,5 +1,7 @@
 package com.meetup.TokyoScalaDevelopers.ScaloidCalculator
 
+import com.github.TokyoScalaDevelopers.CalculatorParser.{CalculatorParser,CalculatorEvaluator,Number}
+
 import org.scaloid.common._
 import android.graphics.Color
 
