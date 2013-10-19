@@ -18,15 +18,23 @@ class Calculator extends SActivity {
           for(num <- row) {
             SButton(s"$num")
               .<<.Weight(1).>>
-              .onClick(toast(s"Clicked $num"))
+              .onClick( pressedNumber(num) )
           }
         }.<<.Weight(3).>>
       }
 
       this += new SLinearLayout {
-        SButton("0").<<.Weight(2).>>
-        SButton(".").<<.Weight(1).>>
+        SButton("0").<<.Weight(1).>>.onClick(pressedNumber(0))
+        SButton(".").<<.Weight(2).>>.onClick(pressedDecimal())
       }.<<.Weight(3).>>
     }
+  }
+
+  def pressedNumber(num: Integer) {
+    toast(s"Pressed $num")
+  }
+
+  def pressedDecimal() {
+    toast("Pressed decimal")
   }
 }
