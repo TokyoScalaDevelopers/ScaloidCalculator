@@ -27,6 +27,8 @@ class Calculator extends SActivity {
   }
 
   implicit var state = CalculatorState()
+  type QueueType = String
+  var queue: List[QueueType] = List()
 
   onCreate {
     contentView = new SVerticalLayout {
@@ -62,7 +64,16 @@ class Calculator extends SActivity {
     }
   }
 
+  def pressedAC() {
+    queue = List()
+    resetState()
+  }
+
   def pressedNumber(num: Integer) {
+    if(queue.length == 1) { // If there is only one number in the queue,
+      queue = List()        // the user wants to start a new calculation
+    }
+
     if(!state.hasDecimal) {
       state = state.copy(whole = state.whole * 10 + num)
     } else {
@@ -81,7 +92,7 @@ class Calculator extends SActivity {
   }
 
   def updateDisplay() {
-    resultView text Helpers.stateToString()
+    resultView text (queue.mkString(" ") + " " + Helpers.stateToString())
   }
 
   def resetState() {
@@ -89,5 +100,29 @@ class Calculator extends SActivity {
     updateDisplay()
   }
 
+  def appendCurrentNumber() {
+    queue = queue :+ Helpers.stateToString()
+    resetState()
+  }
 
+  def appendOperation(op: String) {
+    def _trimOptionalTrailingOp(queue: List[QueueType]): List[QueueType] = {
+      val operators = "+-*/"
+      val last = queue.last
+      if(operators.contains(last)) {
+        queue.init
+      } else {
+        queue
+      }
+    }
+
+    if(state.whole == 0 && state.decimal == 0) {
+      queue = _trimOptionalTrailingOp(queue) :+ op
+    } else {
+      appendCurrentNumber()
+      queue = queue :+ op
+    }
+
+    resultView text queue.mkString(" ")
+  }
 }
