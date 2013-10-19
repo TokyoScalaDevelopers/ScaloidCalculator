@@ -46,8 +46,6 @@ class Calculator extends SActivity {
         decimal = state.decimal * 10 + num
       )
     }
-    toast(state.toString)
-    toast(stateToString())
 
     updateDisplay()
   }
