@@ -39,11 +39,20 @@ class Calculator extends SActivity {
   }
 
   def pressedNumber(num: Integer) {
-    toast(s"Pressed $num")
+    if(!state.hasDecimal) {
+      state = state.copy(whole = state.whole * 10 + num)
+    } else {
+      state = state.copy(
+        decimal = state.decimal * 10 + num
+      )
+    }
+    toast(stateToString())
   }
 
   def pressedDecimal() {
-    toast("Pressed decimal")
+    state = state.copy(hasDecimal = true)
+
+    toast(stateToString())
   }
 
   def stateToString()(implicit _state: CalculatorState): String = {
