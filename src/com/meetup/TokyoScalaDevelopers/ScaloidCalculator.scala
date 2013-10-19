@@ -1,9 +1,9 @@
-package com.meetup.TokyoScalaDevelopers
+package com.meetup.TokyoScalaDevelopers.ScaloidCalculator
 
 import org.scaloid.common._
 import android.graphics.Color
 
-class HelloScaloid extends SActivity {
+class Calculator extends SActivity {
   onCreate {
     contentView = new SVerticalLayout {
     }
