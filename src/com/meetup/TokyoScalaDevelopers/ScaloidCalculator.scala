@@ -3,11 +3,19 @@ package com.meetup.TokyoScalaDevelopers.ScaloidCalculator
 import org.scaloid.common._
 import android.graphics.Color
 
+case class CalculatorState(
+  whole: Int = 0,
+  decimal: Int = 0,
+  hasDecimal: Boolean = false
+)
+
 class Calculator extends SActivity {
   lazy val resultView = new STextView {
     lines = 1
     text = "0"
   }
+
+  implicit var state = CalculatorState()
 
   onCreate {
     contentView = new SVerticalLayout {
@@ -36,5 +44,13 @@ class Calculator extends SActivity {
 
   def pressedDecimal() {
     toast("Pressed decimal")
+  }
+
+  def stateToString()(implicit _state: CalculatorState): String = {
+    if(_state.hasDecimal) {
+      s"${_state.whole}.${_state.decimal}"
+    } else {
+      s"${_state.whole}"
+    }
   }
 }
