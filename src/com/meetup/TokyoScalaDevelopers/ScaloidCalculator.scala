@@ -64,6 +64,8 @@ class Calculator extends SActivity {
     }
   }
 
+// Pressed buttons
+
   def pressedAC() {
     queue = List()
     resetState()
@@ -77,9 +79,7 @@ class Calculator extends SActivity {
     if(!state.hasDecimal) {
       state = state.copy(whole = state.whole * 10 + num)
     } else {
-      state = state.copy(
-        decimal = state.decimal * 10 + num
-      )
+      state = state.copy(decimal = state.decimal * 10 + num)
     }
 
     updateDisplay()
@@ -91,9 +91,13 @@ class Calculator extends SActivity {
     updateDisplay()
   }
 
+// Display-related functions
+
   def updateDisplay() {
     resultView text (queue.mkString(" ") + " " + Helpers.stateToString())
   }
+
+// Utility functions
 
   def resetState() {
     state = CalculatorState()
