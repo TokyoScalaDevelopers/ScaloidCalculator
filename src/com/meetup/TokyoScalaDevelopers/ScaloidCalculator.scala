@@ -131,4 +131,17 @@ class Calculator extends SActivity {
 
     resultView text queue.mkString(" ")
   }
+
+  def evaluate() {
+    appendCurrentNumber()
+    val result = CalculatorParser.parseExpression(queue.mkString(" ")).flatMap( CalculatorEvaluator.evaluate )
+    resetState()
+
+    queue = result match {
+      case Some(Number(n)) => List[QueueType](n.toString)
+      case _ => { toast("Error"); queue }
+    }
+    resultView text queue.mkString(" ")
+  }
+
 }
