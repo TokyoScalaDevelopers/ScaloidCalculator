@@ -12,6 +12,7 @@ case class CalculatorState(
 class Calculator extends SActivity {
   lazy val resultView = new STextView {
     lines = 1
+    maxLines = 4
     text = "0"
   }
 
@@ -19,22 +20,35 @@ class Calculator extends SActivity {
 
   onCreate {
     contentView = new SVerticalLayout {
-      this += resultView.<<.Weight(4).>>
-
-      for(row <- (1 to 9).grouped(3)) {
-        this += new SLinearLayout {
-          for(num <- row) {
-            SButton(s"$num")
-              .<<.Weight(1).>>
-              .onClick( pressedNumber(num) )
-          }
-        }.<<.Weight(3).>>
-      }
+      this += resultView
+        .textSize(20.dip)
 
       this += new SLinearLayout {
-        SButton("0").<<.Weight(1).>>.onClick(pressedNumber(0))
-        SButton(".").<<.Weight(2).>>.onClick(pressedDecimal())
-      }.<<.Weight(3).>>
+        this += new SVerticalLayout {
+          for(row <- (1 to 9).grouped(3)) {
+            this += new SLinearLayout {
+              for(num <- row) {
+                SButton(s"$num")
+                  .<<.fill.Weight(1).>>
+                  .onClick( pressedNumber(num) )
+              }
+            }.<<.Weight(3).>>
+          }
+
+          this += new SLinearLayout {
+            SButton("0").<<.fill.Weight(1).>>.onClick(pressedNumber(0))
+            SButton(".").<<.fill.Weight(2).>>.onClick(pressedDecimal())
+          }.<<.Weight(3).>>
+        }.<<.fill.Weight(1).>>
+
+        this += new SVerticalLayout {
+          SButton("*").<<.Weight(1).>>
+          SButton("-").<<.Weight(1).>>
+          SButton("+").<<.Weight(1).>>
+          SButton("=").<<.Weight(3).>>
+        }.<<.fill.Weight(3).>>
+      }.<<.fill.>>
+
     }
   }
 
