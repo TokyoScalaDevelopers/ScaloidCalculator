@@ -9,6 +9,16 @@ case class CalculatorState(
   hasDecimal: Boolean = false
 )
 
+object Helpers {
+  def stateToString()(implicit _state: CalculatorState): String = {
+    if(_state.hasDecimal) {
+      s"${_state.whole}.${_state.decimal}"
+    } else {
+      s"${_state.whole}"
+    }
+  }
+}
+
 class Calculator extends SActivity {
   lazy val resultView = new STextView {
     lines = 1
@@ -70,15 +80,14 @@ class Calculator extends SActivity {
     updateDisplay()
   }
 
-  def stateToString()(implicit _state: CalculatorState): String = {
-    if(_state.hasDecimal) {
-      s"${_state.whole}.${_state.decimal}"
-    } else {
-      s"${_state.whole}"
-    }
+  def updateDisplay() {
+    resultView text Helpers.stateToString()
   }
 
-  def updateDisplay() {
-    resultView text stateToString()
+  def resetState() {
+    state = CalculatorState()
+    updateDisplay()
   }
+
+
 }
