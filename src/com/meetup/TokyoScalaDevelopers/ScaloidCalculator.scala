@@ -39,6 +39,13 @@ class Calculator extends SActivity {
 
       this += new SLinearLayout {
         this += new SVerticalLayout {
+
+          this += new SLinearLayout {
+            SButton("AC").<<.fill.Weight(1).>>.onClick(pressedAC())
+            SButton("(").<<.fill.Weight(1).>>.onClick(appendOperation("("))
+            SButton(")").<<.fill.Weight(1).>>.onClick(appendOperation(")"))
+          }.<<.Weight(3).>>
+
           for(row <- (1 to 9).grouped(3)) {
             this += new SLinearLayout {
               for(num <- row) {
@@ -56,10 +63,10 @@ class Calculator extends SActivity {
         }.<<.fill.Weight(1).>>
 
         this += new SVerticalLayout {
-          SButton("*").<<.Weight(1).>>
-          SButton("-").<<.Weight(1).>>
-          SButton("+").<<.Weight(1).>>
-          SButton("=").<<.Weight(3).>>
+          SButton("*").<<.Weight(1).>>.onClick(appendOperation("*"))
+          SButton("-").<<.Weight(1).>>.onClick(appendOperation("-"))
+          SButton("+").<<.Weight(1).>>.onClick(appendOperation("+"))
+          SButton("=").<<.Weight(3).>>.onClick(evaluate())
         }.<<.fill.Weight(3).>>
       }.<<.fill.>>
 
